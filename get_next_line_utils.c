@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:53:58 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/11 19:51:41 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/11 21:09:20 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,15 @@ char	*ft_strnjoin(char const *line, char const *buff, size_t size)
 {
 	char	*str;
 
-
-	printf("entrei!!!!\n");
 	str = (char *)malloc(size * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	if (line == NULL)
 	{
 		ft_strlcpy(str, buff, size + 1);
-		printf("to saindo do join\n");
 		return (str);
 	}
-	printf("antes do strlcpy\n");
-	printf("len do s1:%lu\n", ft_strlen(line));
 	ft_strlcpy(str, line, ft_strlen(line) + 1);
 	ft_strlcat(str, buff, size);
-	printf("depois do strlcat\n");
 	return (str);
 }

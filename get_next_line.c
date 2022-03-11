@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:54:05 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/11 19:56:24 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/11 21:12:55 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <stdio.h>
 #include<fcntl.h>
 
-char	*fill_line(char *buff, char *line);
-static void	reffil_buffer(char *buff, size_t len);
+char		*fill_line(char *buff, char *line);
+void		reffil_buffer(char *buff, size_t len);
 size_t		ft_strlen(const char *str);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char *dest, const char *src, size_t dstsize);
@@ -38,10 +38,10 @@ char	*get_next_line(int fd)
 		check = 1;
 		if (!buff[0])
 			check = read(fd, buff, BUFFER_SIZE);
-		printf("check: %d\n", check);
-		printf("Buff: %s\n", buff);
+		printf("CHECK: %d\n", check);
+		printf("BUFFER: %s\n", buff);
 		line = fill_line(buff, line);
-		printf("line: %s\n\n", line);
+		printf("LINE: %s\n\n", line);
 		if (!check || ft_strchr(line, '\n'))
 			break ;
 	}
@@ -55,46 +55,44 @@ char	*fill_line(char *buff, char *line)
 	int		i;
 
 	i = 0;
-	aux = NULL;
+	/*aux = NULL;
 	while (i < BUFFER_SIZE)
 	{
 		if (buff[i] == '\n')
 			aux = &buff[i];
 		i ++;
-	}
-	//aux = ft_strchr(buff, '\n');
-	//printf("aux: %c\n", *aux);
-	if (aux == NULL) //nao achou new line
+	}*/
+	aux = ft_strchr(buff, '\n');
+	if (aux == NULL)
 	{
-		printf("Nao tem new line aqui, baby\n");
 		aux = ft_strnjoin(line, buff, BUFFER_SIZE);
 		buff[0] = '\0';
 		return (aux);
 	}
 	len = (size_t)aux - (size_t)buff;
-	printf("len = %lu\n", len);
-	aux = ft_strnjoin(line, buff, len + ft_strlen(line));
-	if (buff[len])
+	aux = ft_strnjoin(line, buff, len + ft_strlen(line) + 2);
+	if (buff[len + 1])
 		reffil_buffer(buff, len);
 	else
 		buff[0] = '\0';
 	if (line != NULL)
 	{
-		printf("line is NOT NULL\n");
 		free(line);
 	}
 	return (aux);
 }
 
-static void	reffil_buffer(char *buff, size_t len)
+void	reffil_buffer(char *buff, size_t len)
 {
 	int	i;
 
 	i = -1;
-	while (!buff[len])
-		buff[++i] = buff[++len];
-	while (len < BUFFER_SIZE)
-		buff[len] = '\0';
+	while (++len < BUFFER_SIZE)
+	{
+		buff[++i] = buff[len];
+	}
+	while (++i < BUFFER_SIZE)
+		buff[i] = '\0';
 }
 
 int	main(void)
