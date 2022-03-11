@@ -6,11 +6,15 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:53:58 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/11 19:10:21 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:51:41 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include<fcntl.h>
 
 size_t	ft_strlen(const char *str)
 {
@@ -83,14 +87,25 @@ char	*ft_strchr(const char *s, int c)
 
 /* um join diferente porque eu quero juntar a line
 com a buff mas so ate ft_strlen(line) + len */
-char	*ft_strnjoin(char const *s1, char const *s2, size_t size)
+char	*ft_strnjoin(char const *line, char const *buff, size_t size)
 {
 	char	*str;
 
+
+	printf("entrei!!!!\n");
 	str = (char *)malloc(size * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(str, s2, size);
+	if (line == NULL)
+	{
+		ft_strlcpy(str, buff, size + 1);
+		printf("to saindo do join\n");
+		return (str);
+	}
+	printf("antes do strlcpy\n");
+	printf("len do s1:%lu\n", ft_strlen(line));
+	ft_strlcpy(str, line, ft_strlen(line) + 1);
+	ft_strlcat(str, buff, size);
+	printf("depois do strlcat\n");
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:54:05 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/11 19:21:48 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:56:24 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	*get_next_line(int fd)
 			check = read(fd, buff, BUFFER_SIZE);
 		printf("check: %d\n", check);
 		printf("Buff: %s\n", buff);
-		fill_line(buff, line);
+		line = fill_line(buff, line);
+		printf("line: %s\n\n", line);
 		if (!check || ft_strchr(line, '\n'))
 			break ;
 	}
@@ -54,29 +55,35 @@ char	*fill_line(char *buff, char *line)
 	int		i;
 
 	i = 0;
-	if (line != NULL)
-	{
-		printf("oi\n");
-		free(line);
-	}
 	aux = NULL;
 	while (i < BUFFER_SIZE)
 	{
-		//if (buff[i] == '\n')
-			//aux = &buff[i];
+		if (buff[i] == '\n')
+			aux = &buff[i];
 		i ++;
-		printf("i: %i\n", i);
 	}
-	printf("oi\n");
 	//aux = ft_strchr(buff, '\n');
-	printf("aux: %c\n", *aux);
-	if (aux == NULL)
-		return (ft_strnjoin(line, buff, ft_strlen(buff)));
+	//printf("aux: %c\n", *aux);
+	if (aux == NULL) //nao achou new line
+	{
+		printf("Nao tem new line aqui, baby\n");
+		aux = ft_strnjoin(line, buff, BUFFER_SIZE);
+		buff[0] = '\0';
+		return (aux);
+	}
 	len = (size_t)aux - (size_t)buff;
-	line = ft_strnjoin(line, buff, len + ft_strlen(line));
+	printf("len = %lu\n", len);
+	aux = ft_strnjoin(line, buff, len + ft_strlen(line));
 	if (buff[len])
 		reffil_buffer(buff, len);
-	return (line);
+	else
+		buff[0] = '\0';
+	if (line != NULL)
+	{
+		printf("line is NOT NULL\n");
+		free(line);
+	}
+	return (aux);
 }
 
 static void	reffil_buffer(char *buff, size_t len)
