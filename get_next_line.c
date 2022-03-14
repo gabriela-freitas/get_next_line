@@ -6,15 +6,11 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:54:05 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/14 21:07:27 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:53:54 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "get_next_line.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include<fcntl.h>
+#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
@@ -32,8 +28,6 @@ char	*get_next_line(int fd)
 		check = 1;
 		if (!buff[0])
 			check = read(fd, buff, BUFFER_SIZE);
-		//i = check_line_end(buff);
-		//		printf("LINE: %s\n\n", line);
 		if (check > 0)
 			line = fill_line(buff, line);
 		reffil_buffer(buff);

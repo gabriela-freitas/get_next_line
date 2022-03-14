@@ -6,19 +6,11 @@
 /*   By: gafreita <gafreita@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 22:53:58 by gafreita          #+#    #+#             */
-/*   Updated: 2022/03/14 21:07:39 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:54:31 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include<fcntl.h>
-
-char		*fill_line(char *buff, char *line);
-void		reffil_buffer(char *buff);
-size_t		ft_strlen(const char *str);
 
 size_t	ft_strlen(const char *str)
 {
@@ -35,7 +27,6 @@ size_t	ft_strlen(const char *str)
 	}
 	return (cont);
 }
-
 
 char	*fill_line(char *buff, char *line)
 {
@@ -85,22 +76,19 @@ void	reffil_buffer(char *buff)
 		buff[i++] = 0;
 	}
 }
-/*
-int	main(void)
+
+char	*ft_strchr(const char *s, int c)
 {
-	int		fd;
-	char	*line;
-	int		i;
+	int	i;
 
 	i = 0;
-	fd = open("teste.txt", O_RDONLY);
-	while (++i)
+	while (s[i])
 	{
-		line = get_next_line(fd);
-		printf("a linha: %d: %s*\n*\n", i, line);
-		if (!line)
-			break ;
-		free (line);
+		if (s[i] == (char) c)
+			return ((char *)&s[i]);
+		i ++;
 	}
+	if (c == 0)
+		return ((char *)&s[i]);
+	return (0);
 }
-*/
